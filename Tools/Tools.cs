@@ -9,18 +9,26 @@ namespace AOC2024.Tools
 {
     public static class Tools
     {
-        static Point[] LinearDirections = new Point[]
+        public static Point[] LinearDirections = new Point[]
             {
                 new Point(0, 1),
                 new Point( 1,0 ),
                 new Point(0, -1),
                 new Point( -1,0 )
             };
+
+        public static bool CheckOoB(Point position, Point direction, int height, int width)
+        {
+            Point move = position + direction;
+            if (move.x < 0 || move.y < 0) return false;
+            if (move.x >= width || move.y >= height) return false;
+            return true;
+        }
     }
 
 
 
-    struct Point
+    public struct Point
     {
         public int x;
         public int y;
