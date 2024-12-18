@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AOC2024.Problem9
 {
-    public class Part_1
+    public class Part_2
     {
         StreamReader sr = new StreamReader("C:\\Users\\olof_\\OneDrive\\Skrivbord\\AOC2024\\AOC2024\\Problem9\\Input.txt");
         int[] sequence;
         List<int> dataFile;
         long total;
-        public Part_1()
+        public Part_2()
         {
             dataFile = new List<int>();
         }
