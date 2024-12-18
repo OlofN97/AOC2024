@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AOC2024.Problem10
 {
-    internal class Part_1
+    internal class Part_2
     {
         StreamReader sr = new StreamReader("C:\\Users\\olof_\\OneDrive\\Skrivbord\\AOC2024\\AOC2024\\Problem10\\Input.txt");
         List<List<int>> map;
@@ -18,7 +18,7 @@ namespace AOC2024.Problem10
         int total;
         int height;
         int width;
-        public Part_1()
+        public Part_2()
         {
             map = new List<List<int>>();
             startPoints = new List<Point>();
@@ -65,14 +65,14 @@ namespace AOC2024.Problem10
                 HashSet<Point> set = new HashSet<Point>();
                 queue.Enqueue(startPoints[i]);
 
-                while(queue.Count > 0) 
-                { 
+                while (queue.Count > 0)
+                {
                     var node = queue.Dequeue();
-                    
+
                     foreach (var item in findNeightbors(node))
                     {
-                        
-                        if(map[node.y][node.x] == 9 && !set.Contains(node))
+
+                        if (map[node.y][node.x] == 9 && !set.Contains(node))
                         {
                             total++;
                             set.Add(node);
@@ -97,7 +97,7 @@ namespace AOC2024.Problem10
             List<Point> result = new List<Point>();
             foreach (var item in Tools.Tools.LinearDirections)
             {
-                if(Tools.Tools.CheckOoB(position, item, height, width))
+                if (Tools.Tools.CheckOoB(position, item, height, width))
                 {
                     result.Add(position + item);
                 }
@@ -105,7 +105,7 @@ namespace AOC2024.Problem10
             return result;
         }
 
-            
+
 
         private void Debug(HashSet<Point> hash)
         {
@@ -118,14 +118,14 @@ namespace AOC2024.Problem10
                 Console.WriteLine();
             }
 
-            
+
             char[,] hashmap = new char[height, width];
 
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    hashmap[i,j] = '.';
+                    hashmap[i, j] = '.';
                 }
             }
 
@@ -138,7 +138,7 @@ namespace AOC2024.Problem10
             {
                 for (int j = 0; j < width; j++)
                 {
-                    Console.Write(hashmap[i,j]);
+                    Console.Write(hashmap[i, j]);
                 }
                 Console.WriteLine();
             }
