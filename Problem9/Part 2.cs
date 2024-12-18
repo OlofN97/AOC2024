@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AOC2024.Problem9
@@ -24,14 +27,14 @@ namespace AOC2024.Problem9
             sequence = line
             .Select(c => c - '0')
             .ToArray();
-
+            
             CreateDatafile();
 
-            debugSequence();
+            //debugSequence();
 
-            debugDataFile();
+            //debugDataFile();
             SortDatafile();
-            debugDataFile();
+            //debugDataFile();
 
             CalculateTotal();
 
@@ -42,7 +45,7 @@ namespace AOC2024.Problem9
         {
             for (int i = 0; i < dataFile.Count; i++)
             {
-                if (dataFile[i] == -1) break;
+                if (dataFile[i] == -1) continue;
                 else
                 {
                     total += dataFile[i] * i;
@@ -52,20 +55,74 @@ namespace AOC2024.Problem9
 
         private void SortDatafile()
         {
-            int k = dataFile.Count - 1;
-            for (int i = 0; i < dataFile.Count; i++)
+
+            int i = sequence.Length % 2 == 0 ? sequence.Length - 2 : sequence.Length - 1;
+            for (; i >= 0; i -= 2)
             {
-                if (dataFile[i] != -1) continue;
-                if (k <= i) break; //Sorted
-                for (; k > 0; k--)
+                int k = FindEmptySpot(sequence[i], i);
+                if (k != -1)
                 {
-                    if (dataFile[k] == -1) continue;
-                    if (k == i) break;
-                    SwitchPlaces(i, k);
-                    break;
+                    swap(k, i, sequence[i]);
+                    //debugSequence();
+
+                    //debugDataFile();
                 }
             }
         }
+        private void swap(int firstIndex, int SecondIndex, int size)
+        {
+            int dataPos1 = firstIndex;
+            int dataPos2 = FindPositionInDatafile(SecondIndex);
+
+            for (int i = 0; i < size; i++)
+            {
+                SwitchPlaces(dataPos1 + i, dataPos2 + i);
+            }
+        }
+
+        private int FindPositionInDatafile(int index)
+        {
+            int pos = 0;
+            if (index == 0) return pos;
+            else
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    pos += sequence[i];
+                }
+            }
+            return pos;
+        }
+
+        private int FindEmptySpot(int size, int maxIndex)
+        {
+            int count = 0;
+            int max = SequenceToData(maxIndex);
+            for (int i = 0; i < max; i++)
+            {
+                if (dataFile[i] == -1)
+                {
+                    count++;
+                    if (count == size) return i - count + 1;
+                }
+                else if (dataFile[i] != -1)
+                {
+                    count = 0;
+                }
+            }
+            return -1;
+        }
+
+        private int SequenceToData(int index)
+        {
+            int pos = 0;
+            for (int i = 0; i < index; i++)
+            {
+                pos += sequence[i];
+            }
+            return pos;
+        }
+
 
         private void SwitchPlaces(int i, int k)
         {
@@ -91,6 +148,8 @@ namespace AOC2024.Problem9
 
         private void debugSequence()
         {
+            Console.WriteLine();
+
             for (int i = 0; i < sequence.Length; i++)
             {
                 Console.Write(sequence[i]);
@@ -101,6 +160,8 @@ namespace AOC2024.Problem9
         }
         private void debugDataFile()
         {
+            Console.WriteLine();
+
             for (int i = 0; i < dataFile.Count; i++)
             {
                 if (dataFile[i] == -1)
