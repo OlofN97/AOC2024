@@ -26,7 +26,53 @@ namespace AOC2024.Tools
         }
     }
 
+    public struct Node
+    {
+        public int value;
+        public Point position;
+        public List<Node> neighbours;
+        public bool visited;
+        public Node(int y, int x)
+        {
+            position = new Point(y, x);
+            neighbours = new List<Node>();
+            visited = false;
+            value = 0;
+        }
+        public Node(Point position)
+        {
+            this.position = position;
+            neighbours = new List<Node>();
+            visited = false;
+            value = 0;
+        }
 
+        public Node(Point position, int value)
+        {
+            this.position = position;
+            neighbours = new List<Node>();
+            visited = false;
+            this.value = value;
+        }
+        public Node(int y, int x, int value)
+        {
+            position = new Point(y, x);
+            neighbours = new List<Node>();
+            visited = false;
+            this.value = value;
+        }
+
+
+        public void AddNeighbour(Node node)
+        {
+            neighbours.Add(node);
+        }
+
+        public List<Node> GetBeighbour()
+        {
+            return neighbours;
+        }
+    }
 
     public struct Point
     {
