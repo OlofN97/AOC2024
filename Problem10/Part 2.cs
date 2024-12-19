@@ -15,6 +15,7 @@ namespace AOC2024.Problem10
         List<List<int>> map;
         List<List<Node>> nodeMap;
         List<Point> startPoints;
+        int[,] debugMap;
         string line;
         int total;
         int height;
@@ -22,7 +23,7 @@ namespace AOC2024.Problem10
         public Part_2()
         {
             map = new List<List<int>>();
-            nodeMap =  new List<List<Node>>();
+            nodeMap = new List<List<Node>>();
             startPoints = new List<Point>();
             total = 0;
         }
@@ -39,7 +40,7 @@ namespace AOC2024.Problem10
                 line = sr.ReadLine();
             }
             width = map[0].Count; height = map.Count;
-
+            debugMap = new int[height, width];
 
             CreateNodeMap();
 
@@ -47,13 +48,62 @@ namespace AOC2024.Problem10
 
             ConnectGraph();
 
+            RunThruConnections();
+
+            //DebugConnection();
+
             Console.WriteLine("test");
+        }
+
+        private void RunThruConnections()
+        {
+            foreach (var item in startPoints)
+            {
+                RunThruConnection(item);
+            }
+        }
+
+        private void RunThruConnection(Point position)
+        {
+            foreach (var item in nodeMap[position.y][position.x].neighbours)
+            {
+                RunThruConnection(item.position);
+            }
+
+            if(nodeMap[position.y][position.x].value == 9) total++;
+        }
+
+        private void DebugConnection()
+        {
+            for (int y = 0; y < nodeMap.Count; y++)
+            {
+                for (int x = 0; x < nodeMap[0].Count; x++)
+                {
+                    debugMap[y, x] = nodeMap[y][x].neighbours.Count;
+
+                    //foreach (var item in nodeMap[y][x].neighbours)
+                    //{
+                    //    debugMap[item.position.y, item.position.x] += 1;
+                    //}
+                }
+
+            }
+
+            for (int y = 0; y < nodeMap.Count; y++)
+            {
+                for (int x = 0; x < nodeMap[0].Count; x++)
+                {
+                    Console.Write(debugMap[y, x]);
+                }
+                Console.WriteLine();
+            }
         }
 
         private void CreateNodeMap()
         {
             for (int y = 0; y < map.Count; y++)
             {
+                nodeMap.Add(new List<Node>());
                 for (int x = 0; x < map[0].Count; x++)
                 {
                     nodeMap[y].Add(new Node(y, x, map[y][x]));
@@ -63,17 +113,23 @@ namespace AOC2024.Problem10
 
         private void ConnectGraph()
         {
-            Queue<Node> queue = new Queue<Node>();
+            Queue<Point> queue = new Queue<Point>();
 
             for (int i = 0; i < startPoints.Count; i++)
             {
-                queue.Enqueue(nodestartPoints[i]);
+                queue.Enqueue(startPoints[i]);
                 while (queue.Count > 0)
                 {
                     var node = queue.Dequeue();
                     foreach (var item in findNeightbors(node))
                     {
-
+                        if (nodeMap[node.y][node.x].value + 1 == nodeMap[item.y][item.x].value)
+                        {
+                            if (nodeMap[node.y][node.x].AddNeighbour(nodeMap[item.y][item.x]))
+                            {
+                                queue.Enqueue(item);
+                            }
+                        }
                     }
                 }
             }
@@ -90,43 +146,13 @@ namespace AOC2024.Problem10
             }
         }
 
-        private void StartBFSSearch()
+
+        private List<Point> findNeightbors(Point position)
         {
-            Queue<Point> queue = new Queue<Point>();
-
-            for (int i = 0; i < startPoints.Count; i++)
-            {
-                HashSet<Point> set = new HashSet<Point>();
-
-
-
-
-                if (map[node.y][node.x] == 9 && !set.Contains(node))
-                {
-                    total++;
-                    set.Add(node);
-                }
-                if (map[item.y][item.x] == map[node.y][node.x] + 1)
-                {
-                    if (!set.Contains(new Point(item.y, item.x)))
-                        queue.Enqueue(item);
-
-                }
-            }
-
-
-            //Debug(set);
-        }
-
-
-
-
-        private List<Node> findNeightbors(Node node)
-        {
-            List<Node> result = new List<Node>();
+            List<Point> result = new List<Point>();
             foreach (var item in Tools.Tools.LinearDirections)
             {
-                if (Tools.Tools.CheckOoB(node.position, item, height, width))
+                if (Tools.Tools.CheckOoB(position, item, height, width))
                 {
                     result.Add(position + item);
                 }

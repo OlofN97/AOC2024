@@ -63,9 +63,23 @@ namespace AOC2024.Tools
         }
 
 
-        public void AddNeighbour(Node node)
+        public bool AddNeighbour(Node node)
         {
-            neighbours.Add(node);
+            if(CheckIfNeighbourAlreadyExists(node.position))
+            {
+                neighbours.Add(node);
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckIfNeighbourAlreadyExists(Point pos)
+        {
+            foreach (var item in neighbours)
+            {
+                if (pos == item.position) return false;
+            }
+            return true;
         }
 
         public List<Node> GetBeighbour()
