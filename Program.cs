@@ -18,7 +18,7 @@ namespace AOC2024
     {
         static void Main(string[] args)
         {
-            new Problem11.Part_1().run();
+            new Problem11.Part_2().run();
         }
     }
 }
