@@ -24,6 +24,7 @@ namespace AOC2024.Tools
             if (move.x >= width || move.y >= height) return false;
             return true;
         }
+        
     }
 
     public struct Node
@@ -32,12 +33,14 @@ namespace AOC2024.Tools
         public Point position;
         public List<Node> neighbours;
         public bool visited;
+        public char charValue;
         public Node(int y, int x)
         {
             position = new Point(y, x);
             neighbours = new List<Node>();
             visited = false;
             value = 0;
+            charValue = 'f';
         }
         public Node(Point position)
         {
@@ -45,6 +48,7 @@ namespace AOC2024.Tools
             neighbours = new List<Node>();
             visited = false;
             value = 0;
+            charValue = 'f';
         }
 
         public Node(Point position, int value)
@@ -53,6 +57,7 @@ namespace AOC2024.Tools
             neighbours = new List<Node>();
             visited = false;
             this.value = value;
+            charValue = 'f';
         }
         public Node(int y, int x, int value)
         {
@@ -60,7 +65,25 @@ namespace AOC2024.Tools
             neighbours = new List<Node>();
             visited = false;
             this.value = value;
+            charValue = 'f';
         }
+        public Node(int y, int x, char charValue)
+        {
+            position = new Point(y, x);
+            neighbours = new List<Node>();
+            visited = false;
+            this.value = 0;
+            this.charValue = charValue;
+        }
+        public Node(Point position, char charValue)
+        {
+            this.position = position;
+            neighbours = new List<Node>();
+            visited = false;
+            this.value = 0;
+            this.charValue = charValue;
+        }
+
 
 
         public bool AddNeighbour(Node node)

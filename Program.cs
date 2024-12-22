@@ -10,6 +10,8 @@ using AOC2024.Problem8;
 using AOC2024.Problem9;
 using AOC2024.Problem10;
 using AOC2024.Problem11;
+using AOC2024.Problem12;
+
 
 
 namespace AOC2024
@@ -18,7 +20,7 @@ namespace AOC2024
     {
         static void Main(string[] args)
         {
-            new Problem11.Part_2().run();
+            new Problem12.Part_1().run();
         }
     }
 }

@@ -63,6 +63,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Problem12\Part 1.cs" />
+    <Compile Include="Problem12\Part 2.cs" />
     <Compile Include="Problem10\Part 1.cs" />
     <Compile Include="Problem10\Part 2.cs" />
     <Compile Include="Problem11\Part 1.cs" />
@@ -81,6 +83,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Problem12\Input.txt" />
     <Content Include="Problem10\Input.txt" />
     <Content Include="Problem11\Input.txt" />
     <Content Include="Problem7\Input.txt" />
